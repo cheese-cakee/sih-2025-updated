@@ -1,3 +1,5 @@
 write whatever you find appropriate. 
+
 tech stack :
-Frontend : React + Vite + Tailwaind
+
+Frontend : React + Vite + Tailwind
