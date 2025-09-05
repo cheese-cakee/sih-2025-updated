@@ -33,7 +33,7 @@ const LoginPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn }) => {
             <select
               value={formData.userType}
               onChange={(e) => setFormData({ ...formData, userType: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 dark:bg-white/10 dark:text-white"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-white dark:bg-black dark:text-white"
             >
               <option value="passenger">Passenger</option>
               <option value="operator">Bus Operator</option>
