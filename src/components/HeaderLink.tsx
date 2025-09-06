@@ -1,22 +1,25 @@
 import React from "react";
 
-const HeaderLink: React.FC<{
+interface Props {
   active?: boolean;
   onClick: () => void;
   children: React.ReactNode;
-}> = ({ active, onClick, children }) => (
+}
+
+const HeaderLink: React.FC<Props> = ({ active, onClick, children }) => (
   <button
-      onClick={onClick}
-      className={`
-        relative text-sm font-medium text-white transition-colors
-        after:absolute after:left-0 after:-bottom-1 after:h-[2px]
-        after:w-0 after:bg-yellow-500 after:transition-all after:duration-300
-        hover:after:w-full
-        ${active ? "after:w-full text-yellow-400" : ""}
-      `}
-    >
-      {children}
-    </button>
+    onClick={onClick}
+    className={`relative px-3 py-2 rounded-lg font-medium transition-all duration-300 ${
+      active
+        ? "text-yellow-600 dark:text-yellow-400 bg-yellow-400/10"
+        : "text-gray-700 hover:text-yellow-600 dark:text-gray-300 dark:hover:text-yellow-400 hover:bg-white/10 dark:hover:bg-white/5"
+    }`}
+  >
+    {children}
+    {active && (
+      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-500 rounded-full"></div>
+    )}
+  </button>
 );
 
 export default HeaderLink;
