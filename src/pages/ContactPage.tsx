@@ -109,13 +109,13 @@ const ContactPage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
             <ContactCard
               icon={<Phone className="w-6 h-6" />}
               title="Phone Support"
-              lines={["+91 7003434033", "+91 7890603276", "24/7 Support Available"]}
+              lines={["+91 7XXXXXXXX3", "+91 7XXXXXXXX6", "24/7 Support Available"]}
               color="from-green-400 to-green-600"
             />
             <ContactCard
               icon={<Mail className="w-6 h-6" />}
               title="Email Support"
-              lines={["support@smartbus.app", "contact@smartbus.app", "Response within 24 hours"]}
+              lines={["support@bustrack.app", "contact@bustrack.app", "Response within 24 hours"]}
               color="from-blue-400 to-blue-600"
             />
           </div>

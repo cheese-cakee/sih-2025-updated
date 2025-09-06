@@ -13,7 +13,10 @@ interface Props {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addNotification: (message: string, type?: 'success' | 'error' | 'info') => void;
+  addNotification: (
+    message: string,
+    type?: "success" | "error" | "info"
+  ) => void;
 }
 
 const Header: React.FC<Props> = ({
@@ -37,7 +40,7 @@ const Header: React.FC<Props> = ({
     <header className="sticky top-0 z-50 backdrop-blur-2xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-3 md:px-6">
         <div className="flex items-center justify-between">
-          <div 
+          <div
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => setCurrentPage("home")}
           >
@@ -45,7 +48,7 @@ const Header: React.FC<Props> = ({
               <Bus className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-              SmartBus
+              BusTrack
             </h1>
           </div>
 
@@ -120,14 +123,22 @@ const Header: React.FC<Props> = ({
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-xl border border-white/20 dark:border-white/10 text-gray-700 dark:text-gray-200 backdrop-blur-sm"
             >
-              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </button>
             <button
               className="p-2 text-gray-900 dark:text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>

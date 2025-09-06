@@ -9,13 +9,13 @@ interface Props {
   required?: boolean;
 }
 
-const TextInput: React.FC<Props> = ({ 
-  label, 
-  value, 
-  onChange, 
-  placeholder, 
-  type = "text", 
-  required = false 
+const TextInput: React.FC<Props> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+  required = false,
 }) => (
   <div className="group">
     <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-3 group-focus-within:text-yellow-600 dark:group-focus-within:text-yellow-400 transition-colors duration-300">

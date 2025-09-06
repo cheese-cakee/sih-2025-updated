@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
 const busSchema = new mongoose.Schema({
-  number: String,
-  route: String,
-  departure: String,
-  arrival: String,
+  number: { type: String, required: true },
+  route: { type: String, required: true },
+  start: { type: String, required: true },
+  end: { type: String, required: true },
+  timings: [String],
+  capacity: Number,
 });
 
 module.exports = mongoose.model("Bus", busSchema);
@@ -20,7 +22,10 @@ const auth = (req, res, next) => {
   if (!token) return res.status(401).json({ error: "No token" });
 
   try {
-    const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
+    const decoded = jwt.verify(
+      token.replace("Bearer ", ""),
+      process.env.JWT_SECRET
+    );
     req.user = decoded;
     next();
   } catch (err) {

@@ -229,25 +229,7 @@ function App() {
           />
         )}
 
-        {/* 🔹 Display backend data (for quick testing) */}
-        <section className="mt-12">
-          <h2 className="text-xl font-bold mb-4">Available Buses (From DB)</h2>
-          {error && <p className="text-red-500">{error}</p>}
-          {data.length > 0 ? (
-            <ul className="space-y-2">
-              {data.map((bus, i) => (
-                <li
-                  key={i}
-                  className="p-4 rounded-xl shadow bg-white/10 backdrop-blur dark:bg-white/5"
-                >
-                  {bus.number} – {bus.route}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            !error && <p>Loading...</p>
-          )}
-        </section>
+        
       </main>
 
       <footer className="mt-20 py-12 px-4">

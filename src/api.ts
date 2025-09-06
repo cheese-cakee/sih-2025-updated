@@ -9,9 +9,9 @@ export const login = async (email: string, password: string) => {
   return res.json();
 };
 
-export const getBuses = async (token: string) => {
-  const res = await fetch(`${API_URL}/buses`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+// frontend/src/api.ts
+export const getBuses = async () => {
+  const res = await fetch("http://localhost:5000/buses");
   return res.json();
 };
+
