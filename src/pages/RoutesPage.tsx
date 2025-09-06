@@ -1,64 +1,101 @@
 import React from "react";
-import { Route as RouteIcon } from "lucide-react";
-import { mockRoutes } from "../data/mockRoutes";
+import { Clock, MapPin, Route as RouteIcon } from "lucide-react";
 import BackButton from "../components/BackButton";
+import { mockRoutes } from "../data/mockRoutes";
 import type { PageType } from "../types";
 
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
-
+  addNotification: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-const RoutesPage: React.FC<Props> = ({ setCurrentPage }) => {
+const RoutePage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
   return (
     <div className="min-h-screen px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center mb-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center mb-12">
           <BackButton onClick={() => setCurrentPage("home")} />
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Bus Routes</h1>
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              Bus Routes
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Explore all available routes and their schedules
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {mockRoutes.map((route) => (
             <div
               key={route.id}
-              className="bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl p-6 shadow-xl hover:bg-white/80 dark:hover:bg-white/10 transition"
+              className="group relative"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
-                    <span className="font-bold text-gray-900">{route.name.slice(-1)}</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl rounded-3xl"></div>
+              <div className="relative bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/30 dark:border-white/10 rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                      <span className="font-bold text-white text-lg">
+                        {route.name.slice(-1)}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {route.name}
+                      </h3>
+                      <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          Every {route.frequency}
+                        </span>
+                        <span>{route.distance}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{route.name}</h3>
-                    <p className="text-sm text-gray-700 dark:text-white/70">Every {route.frequency}</p>
+                  <RouteIcon className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+                </div>
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-green-500 rounded-full mr-4 shadow"></div>
+                    <span className="text-gray-900 dark:text-white font-medium">
+                      {route.from}
+                    </span>
+                  </div>
+                  <div className="ml-2 border-l-2 border-dashed border-gray-300 dark:border-gray-600 h-8"></div>
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-red-500 rounded-full mr-4 shadow"></div>
+                    <span className="text-gray-900 dark:text-white font-medium">
+                      {route.to}
+                    </span>
                   </div>
                 </div>
-                <RouteIcon className="w-6 h-6 text-yellow-500" />
-              </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                  <span className="text-gray-900 dark:text-white">{route.from}</span>
+                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-6">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-4 h-4" />
+                    {route.stops} stops
+                  </span>
+                  <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full">
+                    Active
+                  </span>
                 </div>
-                <div className="ml-1.5 border-l-2 border-dashed border-black/20 dark:border-white/20 h-6"></div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
-                  <span className="text-gray-900 dark:text-white">{route.to}</span>
-                </div>
-              </div>
 
-              <div className="mt-6 flex gap-3">
-                <button
-                  onClick={() => setCurrentPage("tracking")}
-                  className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition"
-                >
-                  Track Buses
-                </button>
-                <button className="flex-1 bg-white border border-black/10 text-gray-900 py-2 px-4 rounded-lg text-sm font-medium hover:bg-black/5 transition dark:bg-white/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10">
-                  View Schedule
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setCurrentPage("tracking");
+                      addNotification(`Viewing buses on ${route.name}`, "info");
+                    }}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
+                    Track Buses
+                  </button>
+                  <button className="flex-1 bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-white py-3 px-4 rounded-xl text-sm font-semibold hover:bg-white/80 dark:hover:bg-white/20 transition-all duration-300">
+                    Schedule
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -68,4 +105,4 @@ const RoutesPage: React.FC<Props> = ({ setCurrentPage }) => {
   );
 };
 
-export default RoutesPage;
+export default RoutePage;
