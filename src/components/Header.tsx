@@ -38,7 +38,7 @@ const Header: React.FC<Props> = ({
             <Bus className="w-5 h-5 text-gray-900" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-            SmartBus
+            BusTrack
           </h1>
         </div>
 
@@ -153,7 +153,7 @@ const Header: React.FC<Props> = ({
             {isLoggedIn ? (
               <button
                 onClick={() => setIsLoggedIn(false)}
-                className="text-left bg-red-500 text-white px-4 py-2 rounded-lg w-fit mt-2"
+                className="text-left bg-red-600 text-white px-4 py-2 rounded-lg w-fit mt-2"
               >
                 Logout
               </button>

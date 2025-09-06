@@ -30,14 +30,19 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           <div className="flex-1 text-center lg:text-left">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
-              Track Your Bus in <span className="text-yellow-500">Real-Time</span>
+              Track Your Bus in{" "}
+              <span className="text-yellow-500">Real-Time</span>
             </h2>
             <p className="text-lg text-gray-700 dark:text-white/80 mb-6 max-w-2xl">
-              Never miss your bus again! Search by route or track specific buses with live updates and accurate ETAs.
+              Never miss your bus again! Search by route or track specific buses
+              with live updates and accurate ETAs.
             </p>
             <button
               onClick={() => setCurrentPage("signup")}
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-3 rounded-xl font-semibold hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-lg"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg
+             hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 active:scale-95
+             transition-all duration-300 ease-in-out
+             animate-pop"
             >
               Get Started Free
             </button>
@@ -50,7 +55,9 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   Live Bus Tracking
                 </h3>
-                <p className="text-gray-700 dark:text-white/70">Real-time location updates</p>
+                <p className="text-gray-700 dark:text-white/70">
+                  Real-time location updates
+                </p>
               </div>
             </div>
           </div>
@@ -97,24 +104,35 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
             <div className="mt-6 space-y-4">
               {searchResults.length > 0 ? (
                 searchResults.map((route) => (
-                  <div key={route.id} className="bg-white/70 dark:bg-white/5 border rounded-xl p-4 shadow">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{route.name}</h4>
+                  <div
+                    key={route.id}
+                    className="bg-white/70 dark:bg-white/5 border rounded-xl p-4 shadow"
+                  >
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      {route.name}
+                    </h4>
                     <p className="text-sm text-gray-700 dark:text-white/70">
                       {route.from} → {route.to} • Every {route.frequency}
                     </p>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-600 dark:text-white/60 text-sm">No routes found. Try different locations.</p>
+                <p className="text-gray-600 dark:text-white/60 text-sm">
+                  No routes found. Try different locations.
+                </p>
               )}
             </div>
           </div>
 
-          <div className="text-center text-gray-600 dark:text-white/60 font-semibold py-2">OR</div>
+          <div className="text-center text-gray-600 dark:text-white/60 font-semibold py-2">
+            OR
+          </div>
 
           {/* Track by Bus Number */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Track by Bus Number</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+              Track by Bus Number
+            </h3>
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="text"
@@ -143,14 +161,33 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: <Search className="w-8 h-8" />, title: "Smart Search", description: "Find buses by route or number instantly" },
-              { icon: <Clock className="w-8 h-8" />, title: "Real-Time Tracking", description: "Live location and ETA updates" },
-              { icon: <Bell className="w-8 h-8" />, title: "Smart Alerts", description: "Never miss your bus again" },
+              {
+                icon: <Search className="w-8 h-8" />,
+                title: "Smart Search",
+                description: "Find buses by route or number instantly",
+              },
+              {
+                icon: <Clock className="w-8 h-8" />,
+                title: "Real-Time Tracking",
+                description: "Live location and ETA updates",
+              },
+              {
+                icon: <Bell className="w-8 h-8" />,
+                title: "Smart Alerts",
+                description: "Never miss your bus again",
+              },
             ].map((feature, index) => (
-              <div key={index} className="bg-white/70 dark:bg-white/5 border rounded-2xl p-6 shadow-xl hover:bg-white/80 dark:hover:bg-white/10 transition">
+              <div
+                key={index}
+                className="bg-white/70 dark:bg-white/5 border rounded-2xl p-6 shadow-xl hover:bg-white/80 dark:hover:bg-white/10 transition"
+              >
                 <div className="text-yellow-500 mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
-                <p className="text-gray-700 dark:text-white/80">{feature.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-700 dark:text-white/80">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
