@@ -239,7 +239,7 @@ function App() {
               <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
                 <Bus className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold">SmartBus</span>
+              <span className="text-xl font-bold">BusTrack</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Making public transportation smarter, faster, and more reliable

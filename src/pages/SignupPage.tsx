@@ -41,7 +41,7 @@ const SignupPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn, addNotific
                 <Bus className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Join SmartBus
+                Join BusTrack
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
                 Create your account and start tracking
