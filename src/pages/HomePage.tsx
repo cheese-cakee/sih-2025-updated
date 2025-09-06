@@ -1,26 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Bus, Clock, Bell } from "lucide-react";
-import { mockRoutes } from "../data/mockRoutes";
-import type { RouteItem } from "../types";
 import type { PageType } from "../types";
 
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
 }
 
+interface Route {
+  _id: string;
+  routeNumber: string;
+  start: string;
+  end: string;
+}
+
 const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [filteredRoutes, setFilteredRoutes] = useState<Route[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [busNumber, setBusNumber] = useState("");
-  const [searchResults, setSearchResults] = useState<RouteItem[]>([]);
 
+  // fetch routes from backend
+  useEffect(() => {
+    fetch("http://localhost:5000/api/routes")
+      .then((res) => res.json())
+      .then((data) => {
+        setRoutes(data);
+        setFilteredRoutes(data); // show all by default
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching routes:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // filter logic
   const handleSearch = () => {
-    const results = mockRoutes.filter(
+    const results = routes.filter(
       (r) =>
-        (!from || r.from.toLowerCase().includes(from.toLowerCase())) &&
-        (!to || r.to.toLowerCase().includes(to.toLowerCase()))
+        (!from || r.start.toLowerCase().includes(from.toLowerCase())) &&
+        (!to || r.end.toLowerCase().includes(to.toLowerCase()))
     );
-    setSearchResults(results);
+    setFilteredRoutes(results);
   };
 
   return (
@@ -40,9 +64,8 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
             <button
               onClick={() => setCurrentPage("signup")}
               className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg
-             hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 active:scale-95
-             transition-all duration-300 ease-in-out
-             animate-pop"
+               hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 active:scale-95
+               transition-all duration-300 ease-in-out animate-pop"
             >
               Get Started Free
             </button>
@@ -102,17 +125,19 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
 
             {/* Results */}
             <div className="mt-6 space-y-4">
-              {searchResults.length > 0 ? (
-                searchResults.map((route) => (
+              {loading ? (
+                <p>Loading routes...</p>
+              ) : filteredRoutes.length > 0 ? (
+                filteredRoutes.map((route) => (
                   <div
-                    key={route.id}
+                    key={route._id}
                     className="bg-white/70 dark:bg-white/5 border rounded-xl p-4 shadow"
                   >
                     <h4 className="font-semibold text-gray-900 dark:text-white">
-                      {route.name}
+                      {route.routeNumber}
                     </h4>
                     <p className="text-sm text-gray-700 dark:text-white/70">
-                      {route.from} → {route.to} • Every {route.frequency}
+                      {route.start} → {route.end}
                     </p>
                   </div>
                 ))
@@ -153,7 +178,7 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Features Section (keep same as before) */}
       <section className="px-4 py-12 md:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
