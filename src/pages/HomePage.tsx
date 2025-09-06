@@ -108,7 +108,20 @@ const HomePage: React.FC<HomePageProps> = ({
                 <div className="relative bg-white/30 dark:bg-white/5 backdrop-blur-2xl border border-white/30 dark:border-white/10 rounded-3xl p-8 shadow-2xl">
                   <div className="text-center">
                     <div className="relative inline-block mb-6">
-                      <Bus className="w-20 h-20 text-yellow-500" />
+                      <div className="relative inline-block mb-6">
+                      <div className="relative inline-block mb-3">  {/* was mb-6 */}
+                      <img
+                      src="/sihlogo.jpg"
+                      alt="BusTrack"
+                      width={96}         // hint for CLS
+                      height={96}
+                      className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow"  />
+  <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white" />
+</div>
+
+  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white"></div>
+</div>
+
                       <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white"></div>
                     </div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">

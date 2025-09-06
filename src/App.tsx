@@ -237,7 +237,7 @@ function App() {
           <div className="bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/30 dark:border-white/10 rounded-3xl p-8 text-center shadow-2xl">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
-                <Bus className="w-4 h-4 text-white" />
+              <img src="/sihlogo.jpg" alt="BusTrack" className="h-8 w-8 rounded-xl object-cover shadow-lg" />
               </div>
               <span className="text-xl font-bold">BusTrack</span>
             </div>
