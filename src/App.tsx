@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { AlertCircle, CheckCircle, Bus } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 
 // Types
 import type { BusItem, SearchFilters, PageType } from "./types";
 
 // Components
 import Header from "./components/Header";
+import "./index.css";
 
-// Pages (use the same filenames as in your project tree)
+// Pages
 import HomePage from "./pages/HomePage";
 import RoutesPage from "./pages/RoutesPage";
 import TrackingPage from "./pages/TrackingPage";
@@ -35,7 +36,6 @@ function App() {
 
   // 🔹 Backend data + error states
   const [data, setData] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -48,12 +48,12 @@ function App() {
     return "dark";
   });
 
-  // 🔹 Fetch data from backend
+  // 🔹 Fetch data from backend (you can remove if not using backend)
   useEffect(() => {
     fetch("http://localhost:5000/api/mockroutes")
       .then((res) => res.json())
       .then((data) => setData(data))
-      .catch((err) => setError(err.message));
+      .catch(() => setData([]));
   }, []);
 
   // 🔹 Theme sync
@@ -64,9 +64,10 @@ function App() {
     localStorage.setItem("smartbus-theme", theme);
   }, [theme]);
 
-  // Derived data
+  // Derived data (use backend data if available, otherwise fallback to mock)
   const filteredBuses = useMemo(() => {
-    return mockBuses.filter((bus) => {
+    const source = data.length ? data : mockBuses;
+    return source.filter((bus) => {
       const matchesNumber =
         !searchFilters.busNumber ||
         bus.number
@@ -80,9 +81,9 @@ function App() {
         bus.route.toLowerCase().includes(searchFilters.to.toLowerCase());
       return matchesNumber && matchesFrom && matchesTo;
     });
-  }, [searchFilters]);
+  }, [searchFilters, data]);
 
-  // Notifications
+  // 🔹 Notifications
   const addNotification = useCallback(
     (message: string, type: "success" | "error" | "info" = "info") => {
       const id = Date.now();
@@ -95,7 +96,9 @@ function App() {
     []
   );
 
-  // Search handlers
+  // 🔹 SOS handler
+
+  // 🔹 Search handlers
   const handleBusSearch = useCallback(async () => {
     if (!searchFilters.from && !searchFilters.to && !searchFilters.busNumber) {
       addNotification("Please enter search criteria", "error");
@@ -135,7 +138,7 @@ function App() {
     }
   }, [searchFilters.busNumber, addNotification]);
 
-  // Local UI bits
+  // 🔹 Notification UI
   const NotificationContainer = () => (
     <div className="fixed top-20 right-4 z-50 space-y-2">
       {notifications.map((n) => (
@@ -238,7 +241,11 @@ function App() {
           <div className="bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/30 dark:border-white/10 rounded-3xl p-8 text-center shadow-2xl">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
-              <img src="/sihlogo.jpg" alt="BusTrack" className="h-8 w-8 rounded-xl object-cover shadow-lg" />
+                <img
+                  src="/sihlogo.jpg"
+                  alt="BusTrack"
+                  className="h-8 w-8 rounded-xl object-cover shadow-lg"
+                />
               </div>
               <span className="text-xl font-bold">BusTrack</span>
             </div>

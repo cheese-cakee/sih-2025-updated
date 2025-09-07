@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Bus, Eye, EyeOff } from "lucide-react";
-import TextInput from "../components/TextInput";
 import type { PageType } from "../types";
 
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
   setIsLoggedIn: (v: boolean) => void;
-  addNotification: (message: string, type?: "success" | "error" | "info") => void;
+  addNotification: (
+    message: string,
+    type?: "success" | "error" | "info"
+  ) => void;
 }
 
-const LoginPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn, addNotification }) => {
+const LoginPage: React.FC<Props> = ({
+  setCurrentPage,
+  setIsLoggedIn,
+  addNotification,
+}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -81,8 +87,22 @@ const LoginPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn, addNotifica
                 </label>
                 <select
                   value={formData.userType}
-                  onChange={(e) => setFormData({ ...formData, userType: e.target.value })}
-                  className="w-full px-6 py-4 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300"
+                  onChange={(e) =>
+                    setFormData({ ...formData, userType: e.target.value })
+                  }
+                  className="
+  w-full px-6 py-4 rounded-2xl 
+  bg-white/20 dark:bg-gray-800/30 
+  backdrop-blur-md 
+  border border-white/30 dark:border-white/20 
+  text-gray-900 dark:text-white 
+  shadow-lg 
+  hover:bg-white/30 dark:hover:bg-gray-800/50 
+  hover:scale-105 
+  focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent 
+  transition-all duration-300 ease-in-out
+"
+
                 >
                   <option value="passenger">Passenger</option>
                   <option value="operator">Bus Operator</option>
@@ -90,14 +110,32 @@ const LoginPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn, addNotifica
                 </select>
               </div>
 
-              <TextInput
-                label="Email Address"
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={(v) => setFormData({ ...formData, email: v })}
-                required
-              />
+              <div className="flex flex-col w-full">
+  <label htmlFor="email" className="mb-2 text-gray-900 dark:text-white">
+    Email Address
+  </label>
+  <input
+    id="email"
+    type="email"
+    placeholder="Enter your email"
+    value={formData.email}
+    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+    required
+    className="
+  w-full px-6 py-4 rounded-2xl 
+  bg-white/20 dark:bg-gray-800/30 
+  backdrop-blur-md 
+  border border-white/30 dark:border-white/20 
+  text-gray-900 dark:text-white 
+  shadow-lg 
+  hover:bg-white/30 dark:hover:bg-gray-800/50 
+  hover:scale-105 
+  focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent 
+  transition-all duration-300 ease-in-out
+    "
+  />
+</div>
+
 
               <div>
                 <label className="block text-gray-800 dark:text-white text-sm font-semibold mb-3">
@@ -108,17 +146,36 @@ const LoginPage: React.FC<Props> = ({ setCurrentPage, setIsLoggedIn, addNotifica
                     type={showPassword ? "text" : "password"}
                     required
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full px-6 py-4 pr-14 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300"
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="
+  w-full px-6 py-4 rounded-2xl 
+  bg-white/20 dark:bg-gray-800/30 
+  backdrop-blur-md 
+  border border-white/30 dark:border-white/20 
+  text-gray-900 dark:text-white 
+  shadow-lg 
+  hover:bg-white/30 dark:hover:bg-gray-800/50 
+  hover:scale-105 
+  focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent 
+  transition-all duration-300 ease-in-out
+"
                     placeholder="Enter your password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>

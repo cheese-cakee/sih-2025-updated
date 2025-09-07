@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, X, Moon, Sun } from "lucide-react"; // removed Bus (no longer used)
+import { Menu, X, Moon, Sun, AlertTriangle } from "lucide-react";
 import HeaderLink from "./HeaderLink";
 import MobileLink from "./MobileLink";
 import type { PageType } from "../types";
@@ -13,7 +13,10 @@ interface Props {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addNotification: (message: string, type?: "success" | "error" | "info") => void;
+  addNotification: (
+    message: string,
+    type?: "success" | "error" | "info"
+  ) => void;
 }
 
 const Header: React.FC<Props> = ({
@@ -41,7 +44,6 @@ const Header: React.FC<Props> = ({
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => setCurrentPage("home")}
           >
-            {/* Brand logo from /public (served at site root) */}
             <img
               src="/sihlogo.jpg"
               alt="BusTrack"
@@ -54,12 +56,19 @@ const Header: React.FC<Props> = ({
             </h1>
           </div>
 
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex gap-8 text-sm font-medium">
-              <HeaderLink onClick={() => setCurrentPage("home")} active={currentPage === "home"}>
+              <HeaderLink
+                onClick={() => setCurrentPage("home")}
+                active={currentPage === "home"}
+              >
                 Home
               </HeaderLink>
-              <HeaderLink onClick={() => setCurrentPage("routes")} active={currentPage === "routes"}>
+              <HeaderLink
+                onClick={() => setCurrentPage("routes")}
+                active={currentPage === "routes"}
+              >
                 Routes
               </HeaderLink>
               <HeaderLink
@@ -74,18 +83,38 @@ const Header: React.FC<Props> = ({
               >
                 Contact
               </HeaderLink>
+              
             </nav>
 
             <div className="flex items-center gap-3">
+              {/* Theme Toggle */}
               <button
                 aria-label="Toggle theme"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="inline-flex items-center gap-2 rounded-xl border border-white/20 dark:border-white/10 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
               >
-                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                <span className="hidden lg:inline">{theme === "dark" ? "Light" : "Dark"}</span>
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+                <span className="hidden lg:inline">
+                  {theme === "dark" ? "Light" : "Dark"}
+                </span>
               </button>
 
+              {/* 🚨 SOS Button */}
+              <button
+                onClick={() =>
+                  addNotification("🚨 Feature Coming Soon", "info")
+                }
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-xl font-semibold flex items-center gap-2 animate-pulse shadow-lg hover:shadow-xl transition-all"
+              >
+                <AlertTriangle className="w-4 h-4" />
+                SOS
+              </button>
+
+              {/* Login/Logout */}
               {isLoggedIn ? (
                 <button
                   onClick={() => {
@@ -107,24 +136,34 @@ const Header: React.FC<Props> = ({
             </div>
           </div>
 
+          {/* Mobile Nav Toggle */}
           <div className="md:hidden flex items-center gap-2">
             <button
               aria-label="Toggle theme"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-xl border border-white/20 dark:border-white/10 text-gray-700 dark:text-gray-200 backdrop-blur-sm"
             >
-              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </button>
             <button
               className="p-2 text-gray-900 dark:text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
 
+        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-white/20 dark:border-white/10">
             <div className="flex flex-col gap-2 mt-4">
@@ -132,6 +171,18 @@ const Header: React.FC<Props> = ({
               <MobileLink label="Routes" onClick={() => switchTo("routes")} />
               <MobileLink label="Track" onClick={() => switchTo("tracking")} />
               <MobileLink label="Contact" onClick={() => switchTo("contact")} />
+
+              {/* 🚨 SOS in Mobile Menu */}
+              <button
+                onClick={() =>
+                  addNotification("🚨 Feature Coming Soon", "info")
+                }
+                className="text-left bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl w-fit mt-2 flex items-center gap-2 animate-pulse"
+              >
+                <AlertTriangle className="w-4 h-4" />
+                SOS
+              </button>
+
               {isLoggedIn ? (
                 <button
                   onClick={() => {
