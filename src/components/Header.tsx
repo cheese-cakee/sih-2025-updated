@@ -1,5 +1,5 @@
 import React from "react";
-import { Bus, Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react"; // removed Bus (no longer used)
 import HeaderLink from "./HeaderLink";
 import MobileLink from "./MobileLink";
 import type { PageType } from "../types";
@@ -13,10 +13,7 @@ interface Props {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addNotification: (
-    message: string,
-    type?: "success" | "error" | "info"
-  ) => void;
+  addNotification: (message: string, type?: "success" | "error" | "info") => void;
 }
 
 const Header: React.FC<Props> = ({
@@ -44,9 +41,14 @@ const Header: React.FC<Props> = ({
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => setCurrentPage("home")}
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-              <Bus className="w-5 h-5 text-white" />
-            </div>
+            {/* Brand logo from /public (served at site root) */}
+            <img
+              src="/sihlogo.jpg"
+              alt="BusTrack"
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300 object-cover"
+            />
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
               BusTrack
             </h1>
@@ -54,16 +56,10 @@ const Header: React.FC<Props> = ({
 
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex gap-8 text-sm font-medium">
-              <HeaderLink
-                onClick={() => setCurrentPage("home")}
-                active={currentPage === "home"}
-              >
+              <HeaderLink onClick={() => setCurrentPage("home")} active={currentPage === "home"}>
                 Home
               </HeaderLink>
-              <HeaderLink
-                onClick={() => setCurrentPage("routes")}
-                active={currentPage === "routes"}
-              >
+              <HeaderLink onClick={() => setCurrentPage("routes")} active={currentPage === "routes"}>
                 Routes
               </HeaderLink>
               <HeaderLink
@@ -86,14 +82,8 @@ const Header: React.FC<Props> = ({
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="inline-flex items-center gap-2 rounded-xl border border-white/20 dark:border-white/10 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
               >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4" />
-                ) : (
-                  <Moon className="w-4 h-4" />
-                )}
-                <span className="hidden lg:inline">
-                  {theme === "dark" ? "Light" : "Dark"}
-                </span>
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                <span className="hidden lg:inline">{theme === "dark" ? "Light" : "Dark"}</span>
               </button>
 
               {isLoggedIn ? (
@@ -123,22 +113,14 @@ const Header: React.FC<Props> = ({
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-xl border border-white/20 dark:border-white/10 text-gray-700 dark:text-gray-200 backdrop-blur-sm"
             >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
               className="p-2 text-gray-900 dark:text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
