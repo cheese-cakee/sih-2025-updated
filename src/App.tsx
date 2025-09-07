@@ -40,7 +40,8 @@ function App() {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("smartbus-theme");
-      if (saved === "dark" || saved === "light") return saved as "dark" | "light";
+      if (saved === "dark" || saved === "light")
+        return saved as "dark" | "light";
       const prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
       return prefers ? "dark" : "light";
     }
@@ -68,7 +69,9 @@ function App() {
     return mockBuses.filter((bus) => {
       const matchesNumber =
         !searchFilters.busNumber ||
-        bus.number.toLowerCase().includes(searchFilters.busNumber.toLowerCase());
+        bus.number
+          .toLowerCase()
+          .includes(searchFilters.busNumber.toLowerCase());
       const matchesFrom =
         !searchFilters.from ||
         bus.route.toLowerCase().includes(searchFilters.from.toLowerCase());
@@ -228,8 +231,6 @@ function App() {
             addNotification={addNotification}
           />
         )}
-
-        
       </main>
 
       <footer className="mt-20 py-12 px-4">
