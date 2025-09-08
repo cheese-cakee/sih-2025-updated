@@ -115,11 +115,9 @@ const HomePage: React.FC<HomePageProps> = ({
                       alt="BusTrack"
                       width={96}         // hint for CLS
                       height={96}
-                      className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow"  />
-  <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white" />
+                      className="w-24 h-24 sm:w-28 sm:h-28 object-contain rounded-xl drop-shadow"  />
+  
 </div>
-
-  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white"></div>
 </div>
 
                       <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-white"></div>

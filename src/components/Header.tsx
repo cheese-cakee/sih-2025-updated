@@ -49,7 +49,7 @@ const Header: React.FC<Props> = ({
               alt="BusTrack"
               width={40}
               height={40}
-              className="h-10 w-10 rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300 object-cover"
+              className="h-10 w-10 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-300 object-cover"
             />
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
               BusTrack
