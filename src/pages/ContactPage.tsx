@@ -1,3 +1,4 @@
+// src/pages/ContactPage.tsx
 import React, { useState } from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
 import BackButton from "../components/BackButton";
@@ -7,7 +8,10 @@ import type { PageType, ContactFormData } from "../types";
 
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
-  addNotification: (message: string, type?: 'success' | 'error' | 'info') => void;
+  addNotification: (
+    message: string,
+    type?: "success" | "error" | "info"
+  ) => void;
 }
 
 const ContactPage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
@@ -17,11 +21,39 @@ const ContactPage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
     subject: "",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ✅ Vite env variable
+  const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    addNotification("Message sent successfully! We'll get back to you soon.", "success");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      addNotification("Please fill all fields", "error");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        addNotification("Message sent successfully!", "success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        addNotification(data.message || "Failed to send message", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      addNotification("Network or server error", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +72,7 @@ const ContactPage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* ✅ Form Section */}
           <div className="lg:col-span-2">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-500/10 blur-2xl"></div>
@@ -90,20 +123,22 @@ const ContactPage: React.FC<Props> = ({ setCurrentPage, addNotification }) => {
 
                   <button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-8 rounded-2xl font-semibold hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
                   >
-                    Send Message
+                    {loading ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               </div>
             </div>
           </div>
 
+          {/* ✅ Contact Cards */}
           <div className="space-y-6">
             <ContactCard
               icon={<MapPin className="w-6 h-6" />}
               title="Office Location"
-              lines={["SmartBus Headquarters", "123 Innovation Drive", "Tech City, TC 12345"]}
+              lines={["BusTrack Head Office", "123 Innovation Drive", "Tech City, TC 12345"]}
               color="from-yellow-400 to-orange-500"
             />
             <ContactCard

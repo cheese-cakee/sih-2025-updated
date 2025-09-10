@@ -5,6 +5,7 @@ import type { PageType } from "../types";
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
   setIsLoggedIn: (v: boolean) => void;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
   addNotification: (
     message: string,
     type?: "success" | "error" | "info"
@@ -15,6 +16,7 @@ const LoginPage: React.FC<Props> = ({
   setCurrentPage,
   setIsLoggedIn,
   addNotification,
+  setIsAdmin,
 }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -26,33 +28,33 @@ const LoginPage: React.FC<Props> = ({
   const [error, setError] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(""); // reset error on new attempt
+  e.preventDefault();
+  setError(""); // reset error
 
-    try {
-      const res = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+  const { email, password, userType } = formData;
 
-      const data = await res.json();
+  // ✅ Hardcoded admin login
+  if (userType === "admin" && email === "admin@system.com" && password === "admin123") {
+    setIsLoggedIn(true);
+    setIsAdmin(true);
+    addNotification("Welcome Admin!", "success");
+    setCurrentPage("home");
+    return;
+  }
 
-      if (res.ok && data.token) {
-        localStorage.setItem("token", data.token);
-        setIsLoggedIn(true);
-        setCurrentPage("home");
-        addNotification("Welcome back! You're now logged in.", "success");
-      } else {
-        setError(data.error || "Login failed");
-      }
-    } catch (err) {
-      setError("⚠️ Server not reachable");
-    }
-  };
+  // ✅ Example normal user login
+  if (userType === "passenger" && email === "user@example.com" && password === "123456") {
+    setIsLoggedIn(true);
+    setIsAdmin(false);
+    addNotification("Login successful!", "success");
+    setCurrentPage("home");
+    return;
+  }
+
+  // ❌ Invalid credentials
+  setError("Invalid email or password");
+  addNotification("Login failed. Please try again.", "error");
+};
 
   return (
     <div className="min-h-screen px-4 py-8 flex items-center justify-center">

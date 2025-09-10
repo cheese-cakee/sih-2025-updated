@@ -15,14 +15,23 @@ import TrackingPage from "./pages/TrackingPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-
-// Data
+import Dashboard from "./pages/admin/dashboard";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ManageBuses from "./pages/admin/ManageBuses";
+import ManageRoutes from "./pages/admin/ManageRoutes";
+import ViewBookings from "./pages/admin/ViewBookings";
+// import { AuthProvider } from "./context/AuthContext";
+// import AdminRoute from "./components/AdminRoute";
 import { mockBuses } from "./data/mockBuses";
+import ManageMessages from "./pages/admin/manageMessages";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     from: "",
     to: "",
@@ -47,14 +56,6 @@ function App() {
     }
     return "dark";
   });
-
-  // 🔹 Fetch data from backend (you can remove if not using backend)
-  useEffect(() => {
-    fetch("http://localhost:5000/api/mockroutes")
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch(() => setData([]));
-  }, []);
 
   // 🔹 Theme sync
   useEffect(() => {
@@ -95,8 +96,6 @@ function App() {
     },
     []
   );
-
-  // 🔹 SOS handler
 
   // 🔹 Search handlers
   const handleBusSearch = useCallback(async () => {
@@ -169,6 +168,10 @@ function App() {
       <div className="w-4 h-4 bg-yellow-400 rounded-full animate-bounce" />
     </div>
   );
+  const handleSOS = () => {
+    addNotification("SOS signal sent!", "info");
+    console.log("SOS triggered!");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-black text-gray-900 dark:text-white">
@@ -178,10 +181,14 @@ function App() {
         theme={theme}
         setTheme={setTheme}
         isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
         setIsLoggedIn={setIsLoggedIn}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         addNotification={addNotification}
+        userEmail={userEmail}
+        setUserEmail={setUserEmail}
+        handleSOS={handleSOS}
       />
 
       <NotificationContainer />
@@ -198,6 +205,17 @@ function App() {
             LoadingSpinner={LoadingSpinner}
             addNotification={addNotification}
           />
+        )}
+        {/* Show only if user is loggedin as admin */}
+        {isAdmin && currentPage === "home" && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setCurrentPage("adminDashboard")}
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition"
+            >
+              Go to Admin Dashboard
+            </button>
+          </div>
         )}
         {currentPage === "routes" && (
           <RoutesPage
@@ -224,6 +242,7 @@ function App() {
           <LoginPage
             setCurrentPage={setCurrentPage}
             setIsLoggedIn={setIsLoggedIn}
+            setIsAdmin={setIsAdmin}
             addNotification={addNotification}
           />
         )}
@@ -231,6 +250,44 @@ function App() {
           <SignupPage
             setCurrentPage={setCurrentPage}
             setIsLoggedIn={setIsLoggedIn}
+            addNotification={addNotification}
+          />
+        )}
+
+        {/* Admin pages */}
+        {currentPage === "adminDashboard" && (
+          <Dashboard
+            setCurrentPage={setCurrentPage}
+            addNotification={addNotification}
+          />
+        )}
+        {currentPage === "manageUsers" && (
+          <ManageUsers
+            setCurrentPage={setCurrentPage}
+            addNotification={addNotification}
+          />
+        )}
+        {currentPage === "manageBuses" && (
+          <ManageBuses
+            setCurrentPage={setCurrentPage}
+            addNotification={addNotification}
+          />
+        )}
+        {currentPage === "manageRoutes" && (
+          <ManageRoutes
+            setCurrentPage={setCurrentPage}
+            addNotification={addNotification}
+          />
+        )}
+        {currentPage === "viewBookings" && (
+          <ViewBookings
+            setCurrentPage={setCurrentPage}
+            addNotification={addNotification}
+          />
+        )}
+        {currentPage === "manageMessages" && (
+          <ManageMessages
+            setCurrentPage={setCurrentPage}
             addNotification={addNotification}
           />
         )}

@@ -32,6 +32,16 @@ export interface ContactFormData {
   message: string;
 }
 
+export interface ContactMessage {
+  _id?: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read?: boolean;
+  createdAt?: string;
+}
+
 export interface LoginFormData {
   email: string;
   password: string;
@@ -47,4 +57,17 @@ export interface SignupFormData {
   phone: string;
 }
 
-export type PageType = "home" | "routes" | "tracking" | "contact" | "login" | "signup";
+export type PageType =
+  | "home"
+  | "routes"
+  | "tracking"
+  | "contact"
+  | "login"
+  | "signup"
+  | "adminDashboard"
+  | "manageUsers"
+  | "manageBuses"
+  | "manageRoutes"
+  | "viewBookings"
+  | "manageMessages";
+
